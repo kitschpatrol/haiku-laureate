@@ -1,2 +1,27 @@
+# Legacy
 *.pyc
-*app/credentials.cfg
+**/app/credentials.cfg
+
+# Credentials
+/.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Coverage
+coverage
+
+# Transpiled files
+build/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+

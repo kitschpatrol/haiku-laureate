@@ -1,0 +1,13 @@
+{
+  "trailingComma": "all",
+  "printWidth": 120,
+  "semi": true,
+  "overrides": [
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    }
+  ]
+}
