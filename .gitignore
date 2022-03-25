@@ -25,3 +25,4 @@ build/
 # Optional eslint cache
 .eslintcache
 
+/.netlify
