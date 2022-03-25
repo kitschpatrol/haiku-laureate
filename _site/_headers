@@ -1,0 +1,7 @@
+/*
+  cache-control: public,max-age=300
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=31536000
+  Content-Security-Policy: default-src 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://static.cloudflareinsights.com https://ajax.cloudflare.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self'; img-src 'self' data:; frame-src: 'none'; report-uri https://5df2f0dcd08b975442e6d695df1bfeb2.report-uri.com/r/d/csp/enforce
