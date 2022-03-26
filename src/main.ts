@@ -96,7 +96,7 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
   const flickr = new Flickr(flickrApiKey);
 
   // Search Flickr for images near the address given.
-  // Moar info on thie API call: https://www.flickr.com/services/api/flickr.photos.search.html
+  // Moar info on the API call: https://www.flickr.com/services/api/flickr.photos.search.html
   const tags = new Map<string, number>();
   const tagsWanted = 150;
   let searchRadius = 1;

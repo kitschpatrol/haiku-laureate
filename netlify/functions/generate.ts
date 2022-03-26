@@ -24,7 +24,11 @@ const handler: Handler = async (event, context) => {
 
   return {
     statusCode: 200,
-    headers: { "Content-Type": "application/json; charset=utf-8" },
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "access-control-allow-origin": "https://frontiernerds.com",
+      // "access-control-allow-origin": "*",
+    },
     body: JSON.stringify(response),
   };
 };

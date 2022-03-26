@@ -27,7 +27,7 @@ console.log(haiku);
 Request
 
 ```
-http://localhost:8888/api/generate?address=123%20william%20street%20new%20york%20new%20york
+/api/generate?address=123%20william%20street%20new%20york%20new%20york
 ```
 
 Response:
@@ -58,7 +58,7 @@ npm run test:watch
 ### Local Netlify Function testing
 
 ```
-netlify dev
+npm run build:watch-netlify
 ```
 
 ## Dev Notes
@@ -66,10 +66,8 @@ netlify dev
 Command line version?
 
 ```
-
 $ npm i yargs
 $ npm i @types/yargs -D # for TypeScript
-
 ```
 
 Yeesh
@@ -90,8 +88,3 @@ https://github.com/kulshekhar/ts-jest/issues/1029
 https://weekly.elfitz.com/2018/10/17/using-rewire-with-typescript-jest/
 
 Config... .env file
-``
-
-```
-
-```
