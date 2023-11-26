@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "TK",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@types/jest": "~27.4",
     "@types/lodash": "^4.14.179",
     "@types/node": "~16.11",
@@ -39,6 +44,7 @@
     "dotenv": "^16.0.0",
     "flickr-sdk": "^6.0.0",
     "lodash": "^4.17.21",
+    "node-fetch": "^3.3.2",
     "node-geocoder": "^4.0.0",
     "syllable": "^5.0.0",
     "tslib": "~2.3.1"
