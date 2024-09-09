@@ -52,16 +52,16 @@ console.log(haiku);
 Request
 
 ```sh
-/api/generate?address=123%20william%20street%20new%20york%20new%20york
+curl -s "https://haiku-laureate.netlify.app/api/generate?address=123%20william%20street%20new%20york%20new%20york" | jq
 ```
 
 Response:
 
 ```json
 {
-  "address": "123 William Street, New York NY",
+  "address": "123 william street new york new york",
   "status": "success",
-  "haiku": "newyork manhattan\nnewyorkcity usa street\npatbo city bridge\n\n"
+  "haiku": "newyork manhattan\nnewyorkcity usa street\nlowermanhattan\n\n"
 }
 ```
 
