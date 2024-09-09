@@ -5,9 +5,9 @@ from operator import itemgetter
 import urllib
 from xml.dom import minidom
 import re
-import nltk 
+import nltk
 from nltk_contrib.readability import textanalyzer
-import ConfigParser 
+import ConfigParser
 
 config = ConfigParser.RawConfigParser()
 config.read('credentials.cfg')
@@ -15,7 +15,7 @@ config.read('credentials.cfg')
 # This script generates a haiku about a particular location based on the
 # titles of nearby flickr photographs.
 
-# Sample comand line use:
+# Sample command line use:
 # > python geo_haiku.py "721 broadway, new york ny"
 
 # Optionally, pass the number of Haikus you want as a second argument:
@@ -27,7 +27,7 @@ debug = 0
 # HELPER FUNCTIONS.
 
 # Phonetic syllable counter via nltk_contrib.
-# Dictionary-based approaches don't work relibably with the weird words of Flickr.
+# Dictionary-based approaches don't work reliably with the weird words of Flickr.
 t = textanalyzer.textanalyzer('eng')
 def count_syllables(word):
   temp_list = list()
@@ -40,7 +40,7 @@ def count_syllables(word):
   return count
 
 def strip_punctuation(s):
-  return s.translate(string.maketrans("",""), string.punctuation) 
+  return s.translate(string.maketrans("",""), string.punctuation)
 
 def has_vowel(s):
   return re.search(r'[aeiou]+', s)
@@ -54,7 +54,7 @@ def geocode(address):
   geo_url = 'http://maps.googleapis.com/maps/api/geocode/xml?address=' + address
   geocode = urllib.urlopen(geo_url)
   geocode_xml = minidom.parse(geocode)
-  
+
   result = geocode_xml.getElementsByTagName('result')[0].getElementsByTagName('geometry')[0].getElementsByTagName('location')[0]
   latitude = result.getElementsByTagName('lat')[0].firstChild.nodeValue
   longitude = result.getElementsByTagName('lng')[0].firstChild.nodeValue
@@ -79,7 +79,7 @@ def find_tags_for_location(latitude, longitude):
 
   while tags_found < tags_wanted:
     # Search Flickr for images near the address given.
-    # Moar info on thie API call: http://www.flickr.com/services/api/flickr.photos.search.html
+    # Moar info on the API call: http://www.flickr.com/services/api/flickr.photos.search.html
     geo_photos = flickr.photos_search(page = str(current_page), min_taken_date = '1900-01-01 00:00:00', lat = str(latitude), lon = str(longitude), accuracy = '16', radius = str(search_radius), per_page = '250', extras = 'tags')
 
     total_pages = int(geo_photos[0].attrib['pages'])
@@ -97,12 +97,12 @@ def find_tags_for_location(latitude, longitude):
         # Add to the dictionary, otherwise increment the frequency count.
         # Make sure the tag exists, and don't let numbers through (they're boring),
         # and that is has a vowel, and that it doesn't look like a meta-reference to a filename.
-        if (len(tag) >= 1) and not re.search(r'\d+', tag) and has_vowel(tag) and not is_picture(tag):   
+        if (len(tag) >= 1) and not re.search(r'\d+', tag) and has_vowel(tag) and not is_picture(tag):
           if tag not in tags:
             tags[tag] = 1
           else:
             tags[tag] += 1
-  
+
     # To get truly regional, need to subtract wider-area tags from a smaller search radius?
     # Maybe next iteration.
 
@@ -134,7 +134,7 @@ def find_tags_for_location(latitude, longitude):
     print '{'
     for tag in sorted(tags.items(), key = itemgetter(1), reverse = True):
       print '"' + tag[0] + '": '+ str(tag[1]) + ', '
-    print '}' 
+    print '}'
     print '\n'
 
   return tags;
@@ -158,7 +158,7 @@ def generate_haiku_from_tags(tags, quantity=1):
       syllables_in_row = 0
       used_boring = 0
 
-      # Go through each tag, sorted by frequency.   
+      # Go through each tag, sorted by frequency.
       for tag in sorted(tags.items(), key = itemgetter(1), reverse = True):
         word = tag[0]
 
@@ -168,7 +168,7 @@ def generate_haiku_from_tags(tags, quantity=1):
 
         if (word in boring_words) and used_boring:
           # don't get to use more than one boring word per line.
-          if debug: print word + ' is boring, and we already spent our boring allowance, skip it'     
+          if debug: print word + ' is boring, and we already spent our boring allowance, skip it'
           continue
 
         if word in used_words:
@@ -184,13 +184,13 @@ def generate_haiku_from_tags(tags, quantity=1):
           if word in boring_words:
             if debug: print word + ' is boring...'
             used_boring = 1 # we used our boring card for this line...
-  
+
           haiku += word + ' '
           syllables_in_row = tentative_syllables_in_row
           used_words.append(word)
 
           # Optionally print syllable count for a sanity check.
-          if debug: print "\"" + word + "\" has " + str(syllables_in_word)      
+          if debug: print "\"" + word + "\" has " + str(syllables_in_word)
 
       haiku = haiku.strip() + '\n'
 
@@ -199,8 +199,8 @@ def generate_haiku_from_tags(tags, quantity=1):
 
   return haiku;
   #return haiku.strip()
-  
-  
+
+
 def generate_haiku_for_address(address, quantity):
   print "generating!"
   latlon = geocode(address);

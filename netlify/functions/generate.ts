@@ -1,36 +1,38 @@
-import { Handler } from "@netlify/functions";
-import { generateHaikuForAddress } from "../../src/main";
+import { type Handler } from '@netlify/functions'
+import { generateHaikuForAddress } from '../../src/main'
 
-const handler: Handler = async (event, context) => {
-  let response = {};
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const handler: Handler = async (event) => {
+	const response: Record<string, unknown> = {}
 
-  // Check for address
-  if (event.queryStringParameters.address == undefined || event.queryStringParameters.address.length == 0) {
-    response["status"] = "error";
-    response["reason"] = 'You need to pass a URL-encoded "address" query parameter';
-  } else {
-    const address = event.queryStringParameters.address;
-    response["address"] = address;
+	const { address } = event.queryStringParameters ?? {}
 
-    try {
-      const haiku = await generateHaikuForAddress(address);
-      response["status"] = "success";
-      response["haiku"] = haiku;
-    } catch (error) {
-      response["status"] = "error";
-      response["reason"] = error.message;
-    }
-  }
+	// Check for address
+	if (address === undefined || address.length === 0) {
+		response.status = 'error'
+		response.reason = 'You need to pass a URL-encoded "address" query parameter'
+	} else {
+		response.address = address
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "access-control-allow-origin": "https://frontiernerds.com",
-      // "access-control-allow-origin": "*",
-    },
-    body: JSON.stringify(response),
-  };
-};
+		try {
+			const haiku = await generateHaikuForAddress(address)
+			response.status = 'success'
+			response.haiku = haiku
+		} catch (error) {
+			response.status = 'error'
+			response.reason = error instanceof Error ? error.message : 'Unknown error'
+		}
+	}
 
-export { handler };
+	return {
+		body: JSON.stringify(response),
+		headers: {
+			'access-control-allow-origin': 'https://frontiernerds.com',
+			'Content-Type': 'application/json; charset=utf-8',
+			// "access-control-allow-origin": "*",
+		},
+		statusCode: 200,
+	}
+}
+
+export { handler }

@@ -1,52 +1,55 @@
 {
-  "name": "haiku-laureate",
-  "version": "1.0.0",
-  "description": "TK",
-  "type": "module",
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
-  },
-  "devDependencies": {
-    "@jest/globals": "^29.7.0",
-    "@types/jest": "~27.4",
-    "@types/lodash": "^4.14.179",
-    "@types/node": "~16.11",
-    "@typescript-eslint/eslint-plugin": "~5.14",
-    "@typescript-eslint/parser": "~5.14",
-    "eslint": "~8.11",
-    "eslint-config-prettier": "~8.5",
-    "eslint-plugin-jest": "~26.1",
-    "jest": "~27.5",
-    "netlify-cli": "^9.13.5",
-    "prettier": "~2.5",
-    "rimraf": "~3.0",
-    "ts-jest": "~27.1",
-    "tsutils": "~3.21",
-    "typescript": "~4.6"
-  },
-  "scripts": {
-    "start": "node build/src/main.js",
-    "clean": "rimraf coverage build tmp",
-    "prebuild": "npm run lint",
-    "build": "tsc -p tsconfig.json",
-    "build:watch": "tsc -w -p tsconfig.json",
-    "build:watch-netlify": "sudo netlify dev",
-    "build:release": "npm run clean && tsc -p tsconfig.release.json",
-    "lint": "eslint . --ext .ts",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
-  },
-  "author": "Eric Mika",
-  "license": "Unlicensed",
-  "dependencies": {
-    "@netlify/functions": "^1.0.0",
-    "dotenv": "^16.0.0",
-    "flickr-sdk": "^6.0.0",
-    "lodash": "^4.17.21",
-    "node-fetch": "^3.3.2",
-    "node-geocoder": "^4.0.0",
-    "syllable": "^5.0.0",
-    "tslib": "~2.3.1"
-  }
+	"name": "haiku-laureate",
+	"version": "1.0.1",
+	"type": "module",
+	"description": "A geolocated haiku generator.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kitschpatrol/haiku-laureate.git"
+	},
+	"homepage": "https://frontiernerds.com/projects/haiku-laureate",
+	"author": {
+		"name": "Eric Mika",
+		"email": "eric@ericmika.com",
+		"url": "https://ericmika.com"
+	},
+	"license": "Unlicensed",
+	"private": true,
+	"packageManager": "pnpm@9.9.0",
+	"engines": {
+		"node": ">=20.0.0",
+		"pnpm": ">=9.0.0"
+	},
+	"keywords": [
+		"itp",
+		"geolocated",
+		"flickr",
+		"haiku",
+		"poetry",
+		"generative"
+	],
+	"scripts": {
+		"clean": "rimraf ./pnpm-lock.yaml ; mv .env temp1 ; mv ./archive/app/credentials.cfg temp2 ;  git clean -fdX ; mv temp1 .env ; mc mv temp2 ./archive/app/credentials.cfg",
+		"fix": "shared-config --fix",
+		"lint": "shared-config --lint",
+		"test": "vitest"
+	},
+	"dependencies": {
+		"@netlify/functions": "^2.8.1",
+		"dotenv": "^16.4.5",
+		"flickr-sdk": "^6.3.0",
+		"lodash": "^4.17.21",
+		"node-geocoder": "^4.4.0",
+		"syllable": "^5.0.1"
+	},
+	"devDependencies": {
+		"@kitschpatrol/shared-config": "^4.7.5",
+		"@types/lodash": "^4.17.7",
+		"@types/node": "^20.16.5",
+		"@types/node-geocoder": "^4.2.6",
+		"netlify-cli": "^17.35.0",
+		"rimraf": "^6.0.1",
+		"typescript": "^5.5.4",
+		"vitest": "^2.0.5"
+	}
 }

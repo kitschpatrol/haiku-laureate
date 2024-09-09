@@ -2,7 +2,7 @@ CONTAINER_NAME=haiku.frontiernerds.com
 IMAGE_NAME=ericmika/$CONTAINER_NAME
 DOMAINS=haiku.frontiernerds.com,haiku.frontiernerds.net
 
-cd `dirname $0`
+cd $(dirname $0)
 docker stop $CONTAINER_NAME
 docker rm $CONTAINER_NAME
 docker build -t $IMAGE_NAME .

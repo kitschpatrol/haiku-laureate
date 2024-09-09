@@ -1,0 +1,23 @@
+{
+	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+	"import": "@kitschpatrol/cspell-config",
+	"ignorePaths": [],
+	"words": [
+		"aeiou",
+		"autoclean",
+		"autoremove",
+		"cherryd",
+		"cherrypy",
+		"flickrapi",
+		"frontiernerds",
+		"getiterator",
+		"latlon",
+		"nosniff",
+		"openstreetmap",
+		"phusion",
+		"SAMEORIGIN",
+		"textanalyzer",
+		"unitedstates",
+		"venv"
+	]
+}
