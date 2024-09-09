@@ -47,7 +47,6 @@
 		"@types/lodash": "^4.17.7",
 		"@types/node": "^20.16.5",
 		"@types/node-geocoder": "^4.2.6",
-		"netlify-cli": "^17.35.0",
 		"rimraf": "^6.0.1",
 		"typescript": "^5.5.4",
 		"vitest": "^2.0.5"

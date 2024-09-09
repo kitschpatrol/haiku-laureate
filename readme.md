@@ -70,18 +70,11 @@ Response:
 ### Setup
 
 ```sh
-npm install netlify-cli -g
-npm i
+pnpm install
 ```
 
-### Iteration
+### Test
 
 ```sh
-npm run test:watch
-```
-
-### Local Netlify Function testing
-
-```sh
-npm run build:watch-netlify
+pnpm run test
 ```
