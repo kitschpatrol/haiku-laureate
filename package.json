@@ -3,10 +3,7 @@
 	"version": "1.0.1",
 	"type": "module",
 	"description": "A geolocated haiku generator.",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/kitschpatrol/haiku-laureate.git"
-	},
+	"repository": "github:kitschpatrol/haiku-laureate",
 	"homepage": "https://frontiernerds.com/projects/haiku-laureate",
 	"author": {
 		"name": "Eric Mika",
@@ -15,7 +12,7 @@
 	},
 	"license": "Unlicensed",
 	"private": true,
-	"packageManager": "pnpm@9.9.0",
+	"packageManager": "pnpm@9.10.0",
 	"engines": {
 		"node": ">=20.0.0",
 		"pnpm": ">=9.0.0"
@@ -29,7 +26,7 @@
 		"generative"
 	],
 	"scripts": {
-		"clean": "rimraf ./pnpm-lock.yaml ; mv .env temp1 ; mv ./archive/app/credentials.cfg temp2 ;  git clean -fdX ; mv temp1 .env ; mc mv temp2 ./archive/app/credentials.cfg",
+		"clean": "git rm -f pnpm-lock.yaml ; mv .env temp1 ; mv ./archive/app/credentials.cfg temp2 ;  git clean -fdX ; mv temp1 .env ; mv temp2 ./archive/app/credentials.cfg",
 		"fix": "shared-config --fix",
 		"lint": "shared-config --lint",
 		"test": "vitest"
@@ -43,12 +40,12 @@
 		"syllable": "^5.0.1"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.7.5",
+		"@kitschpatrol/dict-en-wiktionary": "^1.0.2",
+		"@kitschpatrol/shared-config": "^4.7.9",
 		"@types/lodash": "^4.17.7",
-		"@types/node": "^20.16.5",
+		"@types/node": "20.0.0",
 		"@types/node-geocoder": "^4.2.6",
-		"rimraf": "^6.0.1",
-		"typescript": "^5.5.4",
-		"vitest": "^2.0.5"
+		"typescript": "^5.6.2",
+		"vitest": "^2.1.1"
 	}
 }

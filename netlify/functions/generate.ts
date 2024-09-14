@@ -1,7 +1,6 @@
 import { type Handler } from '@netlify/functions'
 import { generateHaikuForAddress } from '../../src/main'
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const handler: Handler = async (event) => {
 	const response: Record<string, unknown> = {}
 

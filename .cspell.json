@@ -1,7 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-	"import": "@kitschpatrol/cspell-config",
 	"ignorePaths": [],
+	"import": ["@kitschpatrol/cspell-config", "@kitschpatrol/dict-en-wiktionary/cspell-ext.json"],
 	"words": [
 		"aeiou",
 		"autoclean",
@@ -9,13 +9,12 @@
 		"cherryd",
 		"cherrypy",
 		"flickrapi",
-		"frontiernerds",
 		"getiterator",
 		"latlon",
 		"nosniff",
 		"openstreetmap",
 		"phusion",
-		"SAMEORIGIN",
+		"sameorigin",
 		"textanalyzer",
 		"unitedstates",
 		"venv"
