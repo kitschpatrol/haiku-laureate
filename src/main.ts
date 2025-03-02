@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import Flickr from 'flickr-sdk'
-// eslint-disable-next-line @typescript-eslint/naming-convention
+// eslint-disable-next-line ts/naming-convention
 import _ from 'lodash'
 import NodeGeocoder from 'node-geocoder'
 import { syllable } from 'syllable'
@@ -64,7 +64,6 @@ async function geocode(address: string): Promise<LatLon> {
 	const geocoder = NodeGeocoder({
 		// @ts-expect-error - Liminal fetch zone...
 		async fetch(url, init) {
-			// eslint-disable-next-line n/no-unsupported-features/node-builtins
 			const response = fetch(url as string, {
 				...((init ?? {}) as RequestInit),
 				headers: {
@@ -120,10 +119,10 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 			extras: 'tags',
 			lat: location[0],
 			lon: location[1],
-			// eslint-disable-next-line @typescript-eslint/naming-convention
+			// eslint-disable-next-line ts/naming-convention
 			min_taken_date: '1900-01-01 00:00:00',
 			page: currentPage,
-			// eslint-disable-next-line @typescript-eslint/naming-convention
+			// eslint-disable-next-line ts/naming-convention
 			per_page: 250, // Docs claim 500 max, but I only ever get 250...
 			radius: searchRadius,
 		})) as {
@@ -236,6 +235,11 @@ function generateHaikuFromTags(tags: Map<string, number>, quantity = 1): string 
 	return haiku
 }
 
+/**
+ * Generate a haiku about a given address from geographically adjacent Flickr photos.
+ * @param address - The address to generate a haiku for, reasonably forgiving.
+ * @param quantity - The number of haikus to generate.
+ */
 export async function generateHaikuForAddress(address: string, quantity = 1): Promise<string> {
 	const location = await geocode(address)
 	const tags = await findTagsForLocation(location)

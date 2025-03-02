@@ -37,14 +37,14 @@ Note the rewrite to provide a cleaner API URL.
 
 ## Usage
 
-### As a Node library
+### As a module
 
 ```ts
-import { generateHaikuForAddress } from "../../src/main";
+import { generateHaikuForAddress } from './src/main'
 
-const haiku = await generateHaikuForAddress(123 William Street, New York NY)
+const haiku = await generateHaikuForAddress('123 William Street, New York NY')
 
-console.log(haiku);
+console.log(haiku)
 ```
 
 ### Via web API

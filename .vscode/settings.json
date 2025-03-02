@@ -9,7 +9,8 @@
 	"cSpell.enabled": true,
 	"cSpell.workspaceRootPath": ".",
 	"editor.codeActionsOnSave": {
-		"source.fixAll": "explicit"
+		"source.fixAll": "explicit",
+		"source.organizeImports": "never"
 	},
 	"eslint.enable": true,
 	"eslint.validate": [
@@ -21,7 +22,13 @@
 		"mdx",
 		"svelte",
 		"typescript",
-		"typescriptreact"
+		"typescriptreact",
+		"json",
+		"json5",
+		"jsonc",
+		"toml",
+		"xml",
+		"yaml"
 	],
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"[astro]": {
@@ -52,5 +59,8 @@
 	],
 	"prettier.enable": true,
 	"stylelint.enable": true,
-	"stylelint.validate": ["css", "html", "svelte", "astro"]
+	"stylelint.validate": ["css", "html", "svelte", "astro"],
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"eslint.runtime": "node",
+	"eslint.useFlatConfig": true
 }
