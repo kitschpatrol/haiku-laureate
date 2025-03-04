@@ -14,7 +14,7 @@
 	"homepage": "https://frontiernerds.com/projects/haiku-laureate",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/kitschpatrol/haiku-laureate"
+		"url": "git+https://github.com/kitschpatrol/haiku-laureate.git"
 	},
 	"license": "Unlicensed",
 	"author": {
@@ -38,18 +38,17 @@
 		"syllable": "^5.0.1"
 	},
 	"devDependencies": {
-		"@kitschpatrol/dict-en-wiktionary": "^1.1.0",
-		"@kitschpatrol/shared-config": "^5.0.6",
+		"@kitschpatrol/dict-en-wiktionary": "^1.1.1",
+		"@kitschpatrol/shared-config": "^5.2.0",
 		"@types/lodash": "^4.17.16",
-		"@types/node": "20.0.0",
+		"@types/node": "^22.13.9",
 		"@types/node-geocoder": "^4.2.6",
 		"typescript": "~5.7.3",
 		"vitest": "^3.0.7"
 	},
 	"packageManager": "pnpm@10.5.2",
 	"engines": {
-		"node": ">=22.0.0",
-		"pnpm": ">=10.0.0"
+		"node": ">=22.0.0"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
