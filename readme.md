@@ -16,7 +16,7 @@
   }
 } -->
 
-[![License: Unlicensed](https://img.shields.io/badge/License-Unlicensed-yellow.svg)](https://opensource.org/licenses/Unlicensed)
+[![License: UNLICENSED](https://img.shields.io/badge/License-UNLICENSED-yellow.svg)](https://opensource.org/licenses/UNLICENSED)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f35e1ada-effe-440d-b130-c54f070476e0/deploy-status)](https://app.netlify.com/sites/haiku-laureate/deploys)
 
 <!-- /badges -->
@@ -29,11 +29,13 @@
 
 ## Overview
 
-This is a service which generates geographically-aware haiku for any location.
+This is a service which generates geographically-aware haiku for any location. It was created in 2010.
 
 It's implemented in TypeScript + Node.js, and is exposed through a simple API service intended for deployment on Netlify. Note that it cannot be deployed to Cloudflare Workers because it depends on Node APIs.
 
 Note the rewrite to provide a cleaner API URL.
+
+An interactive version is available on [frontiernerds.com](https://frontiernerds.com/haiku-laureate).
 
 ## Usage
 

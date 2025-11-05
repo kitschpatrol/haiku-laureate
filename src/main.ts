@@ -1,3 +1,5 @@
+/* eslint-disable ts/no-unsafe-type-assertion */
+
 import 'dotenv/config'
 import Flickr from 'flickr-sdk'
 // eslint-disable-next-line ts/naming-convention
@@ -173,7 +175,7 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 
 	// Sort the map (insertion order)
 	// https://stackoverflow.com/a/31159284
-	const sortedTags = new Map([...tags.entries()].sort((a, b) => b[1] - a[1]))
+	const sortedTags = new Map([...tags.entries()].toSorted((a, b) => b[1] - a[1]))
 
 	return sortedTags
 }
@@ -190,7 +192,7 @@ function generateHaikuFromTags(tags: Map<string, number>, quantity = 1): string 
 			let usedBoring = 0
 
 			// Go through each tag, sorted by frequency.
-			for (const [word, _] of tags.entries()) {
+			for (const [word] of tags.entries()) {
 				// Make sure the word won't put us past the syllable limit for the row.
 				const syllablesInWord = countSyllables(word)
 				const tentativeSyllablesInRow = syllablesInRow + syllablesInWord

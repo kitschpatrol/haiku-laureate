@@ -6,7 +6,7 @@ export default eslintConfig({
 			'depend/ban-dependencies': [
 				'error',
 				{
-					allowed: ['lodash'],
+					allowed: ['lodash', 'dotenv'],
 				},
 			],
 		},

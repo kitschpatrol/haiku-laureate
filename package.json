@@ -1,6 +1,6 @@
 {
 	"name": "haiku-laureate",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"private": true,
 	"description": "A geolocated haiku generator.",
 	"keywords": [
@@ -16,7 +16,7 @@
 		"type": "git",
 		"url": "git+https://github.com/kitschpatrol/haiku-laureate.git"
 	},
-	"license": "Unlicensed",
+	"license": "UNLICENSED",
 	"author": {
 		"name": "Eric Mika",
 		"email": "eric@ericmika.com",
@@ -30,8 +30,8 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@netlify/functions": "^3.0.0",
-		"dotenv": "^16.4.7",
+		"@netlify/functions": "^5.0.1",
+		"dotenv": "^17.2.3",
 		"flickr-sdk": "^6.3.0",
 		"lodash": "^4.17.21",
 		"node-geocoder": "^4.4.1",
@@ -39,24 +39,15 @@
 	},
 	"devDependencies": {
 		"@kitschpatrol/dict-en-wiktionary": "^1.1.1",
-		"@kitschpatrol/shared-config": "^5.2.0",
-		"@types/lodash": "^4.17.16",
-		"@types/node": "^22.13.9",
+		"@kitschpatrol/shared-config": "^5.8.1",
+		"@types/lodash": "^4.17.20",
+		"@types/node": "^22.19.0",
 		"@types/node-geocoder": "^4.2.6",
-		"typescript": "~5.7.3",
-		"vitest": "^3.0.7"
+		"typescript": "~5.9.3",
+		"vitest": "^4.0.7"
 	},
-	"packageManager": "pnpm@10.5.2",
+	"packageManager": "pnpm@10.20.0",
 	"engines": {
 		"node": ">=22.0.0"
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild",
-			"puppeteer"
-		],
-		"overrides": {
-			"eslint-plugin-markdown": "^5.1.0"
-		}
 	}
 }
