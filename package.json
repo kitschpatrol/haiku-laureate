@@ -30,7 +30,7 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@netlify/functions": "^5.0.1",
+		"@netlify/functions": "^5.1.0",
 		"dotenv": "^17.2.3",
 		"flickr-sdk": "^6.3.0",
 		"lodash": "^4.17.21",
@@ -38,15 +38,15 @@
 		"syllable": "^5.0.1"
 	},
 	"devDependencies": {
-		"@kitschpatrol/dict-en-wiktionary": "^1.1.1",
-		"@kitschpatrol/shared-config": "^5.8.1",
-		"@types/lodash": "^4.17.20",
-		"@types/node": "^22.19.0",
+		"@kitschpatrol/dict-en-wiktionary": "^1.2.2",
+		"@kitschpatrol/shared-config": "^5.10.0",
+		"@types/lodash": "^4.17.21",
+		"@types/node": "^22.19.1",
 		"@types/node-geocoder": "^4.2.6",
 		"typescript": "~5.9.3",
-		"vitest": "^4.0.7"
+		"vitest": "^4.0.15"
 	},
-	"packageManager": "pnpm@10.20.0",
+	"packageManager": "pnpm@10.24.0",
 	"engines": {
 		"node": ">=22.0.0"
 	}
