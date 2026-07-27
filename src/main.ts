@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import Flickr from 'flickr-sdk'
+import { createFlickr } from 'flickr-sdk'
 // eslint-disable-next-line ts/naming-convention
 import _ from 'lodash'
 import NodeGeocoder from 'node-geocoder'
@@ -104,7 +104,7 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 		throw new Error('Missing FLICKR_API_KEY')
 	}
 
-	const flickr = new Flickr(flickrApiKey)
+	const { flickr } = createFlickr(flickrApiKey)
 
 	// Search Flickr for images near the address given.
 	// Moar info on the API call: https://www.flickr.com/services/api/flickr.photos.search.html
@@ -117,33 +117,31 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 	while (tags.size < tagsWanted) {
 		// TODO throws... but errors bubble up?
 
-		const response = (await flickr.photos.search({
-			accuracy: 16,
+		const response = (await flickr('flickr.photos.search', {
+			accuracy: '16',
 			extras: 'tags',
-			lat: location[0],
-			lon: location[1],
+			lat: String(location[0]),
+			lon: String(location[1]),
 			// eslint-disable-next-line ts/naming-convention
 			min_taken_date: '1900-01-01 00:00:00',
-			page: currentPage,
+			page: String(currentPage),
 			// eslint-disable-next-line ts/naming-convention
-			per_page: 250, // Docs claim 500 max, but I only ever get 250...
-			radius: searchRadius,
+			per_page: '250', // Docs claim 500 max, but I only ever get 250...
+			radius: String(searchRadius),
 		})) as {
 			// TODO real types...
-			body: {
-				photos: {
-					pages: number
-					photo: Array<{
-						tags: string
-					}>
-				}
+			photos: {
+				pages: number
+				photo: Array<{
+					tags: string
+				}>
 			}
 		}
 
-		const totalPages = response.body.photos.pages
+		const totalPages = response.photos.pages
 
 		// Wtf, photos.photo?
-		for (const photo of response.body.photos.photo) {
+		for (const photo of response.photos.photo) {
 			// Also strips punctuation
 			for (const word of _.words(photo.tags)) {
 				// Validate...
@@ -181,7 +179,11 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 	return sortedTags
 }
 
-function generateRow(tags: Map<string, number>, usedWords: string[], syllablesWanted: number): string {
+function generateRow(
+	tags: Map<string, number>,
+	usedWords: string[],
+	syllablesWanted: number,
+): string {
 	let row = ''
 	let syllablesInRow = 0
 	let usedBoring = 0
