@@ -1,6 +1,6 @@
 {
 	"name": "haiku-laureate",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"private": true,
 	"description": "A geolocated haiku generator.",
 	"keywords": [
