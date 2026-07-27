@@ -1,5 +1,3 @@
-/* eslint-disable ts/no-unsafe-type-assertion */
-
 import 'dotenv/config'
 import Flickr from 'flickr-sdk'
 // eslint-disable-next-line ts/naming-convention
@@ -12,16 +10,20 @@ import { syllable } from 'syllable'
 
 type LatLon = [lat: number, lon: number]
 
+const VOWEL_REGEX = /[aeiou]+/v
+const PICTURE_REGEX = /jpg$|gif$|png$|jpeg$/v
+const NUMERIC_REGEX = /\d+/v
+
 function countSyllables(word: string): number {
 	return syllable(word)
 }
 
 function hasVowels(s: string): boolean {
-	return /[aeiou]+/.test(s)
+	return VOWEL_REGEX.test(s)
 }
 
 function isPicture(s: string): boolean {
-	return /jpg$|gif$|png$|jpeg$/.test(s)
+	return PICTURE_REGEX.test(s)
 }
 
 function isTiny(s: string): boolean {
@@ -29,7 +31,7 @@ function isTiny(s: string): boolean {
 }
 
 function isNumeric(s: string): boolean {
-	return /\d+/.test(s)
+	return NUMERIC_REGEX.test(s)
 }
 
 function isTerminallyBoring(s: string): boolean {
@@ -79,16 +81,15 @@ async function geocode(address: string): Promise<LatLon> {
 	})
 
 	const response = await geocoder.geocode(address)
+	const firstEntry = Array.isArray(response) ? response[0] : undefined
 
 	// TODO better way to validate?
 	if (
-		typeof response === 'object' &&
-		Array.isArray(response) &&
-		response.length > 0 &&
-		Object.hasOwn(response[0], 'latitude') &&
-		Object.hasOwn(response[0], 'longitude')
+		firstEntry !== undefined &&
+		Object.hasOwn(firstEntry, 'latitude') &&
+		Object.hasOwn(firstEntry, 'longitude')
 	) {
-		return [response[0].latitude ?? 0, response[0].longitude ?? 0]
+		return [firstEntry.latitude ?? 0, firstEntry.longitude ?? 0]
 	}
 
 	throw new Error('Bad Geocode!')
@@ -175,9 +176,52 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 
 	// Sort the map (insertion order)
 	// https://stackoverflow.com/a/31159284
-	const sortedTags = new Map([...tags.entries()].toSorted((a, b) => b[1] - a[1]))
+	const sortedTags = new Map([...tags].toSorted((a, b) => b[1] - a[1]))
 
 	return sortedTags
+}
+
+function generateRow(tags: Map<string, number>, usedWords: string[], syllablesWanted: number): string {
+	let row = ''
+	let syllablesInRow = 0
+	let usedBoring = 0
+
+	// Go through each tag, sorted by frequency.
+	for (const [word] of tags) {
+		if (isBoring(word) && usedBoring > 0) {
+			// Skip the boring word...
+			continue
+		}
+
+		if (usedWords.includes(word)) {
+			// Keep looking, already used it
+			continue
+		}
+
+		// Make sure the word won't put us past the syllable limit for the row.
+		const tentativeSyllablesInRow = syllablesInRow + countSyllables(word)
+
+		if (tentativeSyllablesInRow === syllablesWanted && isBoring(word)) {
+			// Don't end a line with a boring word
+			continue
+		}
+
+		if (tentativeSyllablesInRow <= syllablesWanted) {
+			if (isBoring(word)) {
+				usedBoring = 1 // We used our boring card for this line...
+			}
+
+			row += word + ' '
+
+			syllablesInRow = tentativeSyllablesInRow
+			usedWords.push(word)
+
+			// Optionally print syllable count for a sanity check.
+			// console.log(`${word} has ${syllablesInWord} syllables`);
+		}
+	}
+
+	return row.trim()
 }
 
 function generateHaikuFromTags(tags: Map<string, number>, quantity = 1): string {
@@ -188,47 +232,7 @@ function generateHaikuFromTags(tags: Map<string, number>, quantity = 1): string 
 
 	for (let i = 0; i < quantity; i++) {
 		for (const syllablesWanted of rows) {
-			let syllablesInRow = 0
-			let usedBoring = 0
-
-			// Go through each tag, sorted by frequency.
-			for (const [word] of tags.entries()) {
-				// Make sure the word won't put us past the syllable limit for the row.
-				const syllablesInWord = countSyllables(word)
-				const tentativeSyllablesInRow = syllablesInRow + syllablesInWord
-
-				if (isBoring(word) && usedBoring > 0) {
-					// Skip the boring word...
-					continue
-				}
-
-				if (usedWords.includes(word)) {
-					// Keep looking, already used it
-					continue
-				}
-
-				if (tentativeSyllablesInRow === syllablesWanted && isBoring(word)) {
-					// Don't end a line with a boring word
-					continue
-				}
-
-				if (tentativeSyllablesInRow <= syllablesWanted) {
-					// eslint-disable-next-line max-depth
-					if (isBoring(word)) {
-						usedBoring = 1 // We used our boring card for this line...
-					}
-
-					haiku += word + ' '
-
-					syllablesInRow = tentativeSyllablesInRow
-					usedWords.push(word)
-
-					// Optionally print syllable count for a sanity check.
-					// console.log(`${word} has ${syllablesInWord} syllables`);
-				}
-			}
-
-			haiku = haiku.trim() + '\n'
+			haiku += generateRow(tags, usedWords, syllablesWanted) + '\n'
 		}
 
 		haiku += '\n'
@@ -238,7 +242,9 @@ function generateHaikuFromTags(tags: Map<string, number>, quantity = 1): string 
 }
 
 /**
- * Generate a haiku about a given address from geographically adjacent Flickr photos.
+ * Generate a haiku about a given address from geographically adjacent Flickr
+ * photos.
+ *
  * @param address - The address to generate a haiku for, reasonably forgiving.
  * @param quantity - The number of haikus to generate.
  */

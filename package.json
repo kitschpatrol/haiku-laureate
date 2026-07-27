@@ -24,30 +24,32 @@
 	},
 	"type": "module",
 	"scripts": {
-		"clean": "git rm -f pnpm-lock.yaml ; mv .env temp1 ; mv ./archive/app/credentials.cfg temp2 ;  git clean -fdX ; mv temp1 .env ; mv temp2 ./archive/app/credentials.cfg",
-		"fix": "kpi fix",
-		"lint": "kpi lint",
-		"test": "vitest"
+		"clean": "shx rm -f pnpm-lock.yaml && git clean -fdX -e !.claude/",
+		"fix": "ksc fix",
+		"init": "op inject -i .template.env -o .env && op inject -i archive/app/.template.credentials.cfg -o archive/app/credentials.cfg",
+		"lint": "ksc lint",
+		"test": "vitest run"
 	},
 	"dependencies": {
-		"@netlify/functions": "^5.1.0",
-		"dotenv": "^17.2.3",
+		"@netlify/functions": "^5.3.0",
+		"dotenv": "^17.4.2",
 		"flickr-sdk": "^6.3.0",
-		"lodash": "^4.17.21",
+		"lodash": "^4.18.1",
 		"node-geocoder": "^4.4.1",
 		"syllable": "^5.0.1"
 	},
 	"devDependencies": {
-		"@kitschpatrol/dict-en-wiktionary": "^1.2.2",
-		"@kitschpatrol/shared-config": "^5.10.0",
-		"@types/lodash": "^4.17.21",
-		"@types/node": "^22.19.1",
+		"@kitschpatrol/dict-en-wiktionary": "^1.5.0",
+		"@kitschpatrol/shared-config": "^8.5.0",
+		"@types/lodash": "^4.17.24",
+		"@types/node": "~24.13.3",
 		"@types/node-geocoder": "^4.2.6",
-		"typescript": "~5.9.3",
-		"vitest": "^4.0.15"
+		"shx": "^0.4.0",
+		"typescript": "~6.0.3",
+		"vitest": "^4.1.10"
 	},
-	"packageManager": "pnpm@10.24.0",
+	"packageManager": "pnpm@11.1.2",
 	"engines": {
-		"node": ">=22.0.0"
+		"node": ">=24.16.0"
 	}
 }
