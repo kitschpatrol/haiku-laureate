@@ -1,8 +1,6 @@
-import 'dotenv/config'
 import { createFlickr } from 'flickr-sdk'
 // eslint-disable-next-line ts/naming-convention
 import _ from 'lodash'
-import NodeGeocoder from 'node-geocoder'
 import { syllable } from 'syllable'
 
 // This script generates a haiku about a particular location based on the
@@ -64,32 +62,27 @@ function isBoring(s: string): boolean {
 // Address to latitude longitude
 // Switched from Google to OpenStreetMap to avoid API requirement
 async function geocode(address: string): Promise<LatLon> {
-	// eslint-disable-next-line new-cap
-	const geocoder = NodeGeocoder({
-		// @ts-expect-error - Liminal fetch zone...
-		async fetch(url, init) {
-			const response = fetch(url as string, {
-				...((init ?? {}) as RequestInit),
-				headers: {
-					'user-agent': 'Haiku Warrior <eric@ericmika.com>',
-				},
-			})
+	const url = new URL('https://nominatim.openstreetmap.org/search')
+	url.searchParams.set('q', address)
+	url.searchParams.set('format', 'json')
+	url.searchParams.set('limit', '1')
 
-			return response
+	const response = await fetch(url, {
+		headers: {
+			// Nominatim's usage policy requires an identifying user agent
+			'user-agent': 'Haiku Warrior <eric@ericmika.com>',
 		},
-		provider: 'openstreetmap',
 	})
 
-	const response = await geocoder.geocode(address)
-	const firstEntry = Array.isArray(response) ? response[0] : undefined
+	if (!response.ok) {
+		throw new Error(`Geocoder request failed with status ${response.status}`)
+	}
 
-	// TODO better way to validate?
-	if (
-		firstEntry !== undefined &&
-		Object.hasOwn(firstEntry, 'latitude') &&
-		Object.hasOwn(firstEntry, 'longitude')
-	) {
-		return [firstEntry.latitude ?? 0, firstEntry.longitude ?? 0]
+	const results = (await response.json()) as Array<{ lat?: string; lon?: string }>
+	const firstEntry = results.at(0)
+
+	if (firstEntry?.lat !== undefined && firstEntry.lon !== undefined) {
+		return [Number(firstEntry.lat), Number(firstEntry.lon)]
 	}
 
 	throw new Error('Bad Geocode!')
@@ -98,24 +91,23 @@ async function geocode(address: string): Promise<LatLon> {
 // Get Flickr tags for a given location
 // Returns a map with the word and its frequency, sorted by descending frequency
 // Todo calc syllables as well?
-async function findTagsForLocation(location: LatLon): Promise<Map<string, number>> {
-	const flickrApiKey = process.env.FLICKR_API_KEY
-	if (flickrApiKey === undefined) {
-		throw new Error('Missing FLICKR_API_KEY')
-	}
-
+async function findTagsForLocation(
+	location: LatLon,
+	flickrApiKey: string,
+): Promise<Map<string, number>> {
 	const { flickr } = createFlickr(flickrApiKey)
 
 	// Search Flickr for images near the address given.
 	// Moar info on the API call: https://www.flickr.com/services/api/flickr.photos.search.html
 	const tags = new Map<string, number>()
 	const tagsWanted = 150
+	const maxRequests = 30
+	let requestCount = 0
 	let searchRadius = 1
 	let currentPage = 1
 
-	// TODO max tries...
-	while (tags.size < tagsWanted) {
-		// TODO throws... but errors bubble up?
+	while (tags.size < tagsWanted && requestCount < maxRequests) {
+		requestCount++
 
 		const response = (await flickr('flickr.photos.search', {
 			accuracy: '16',
@@ -129,7 +121,6 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 			per_page: '250', // Docs claim 500 max, but I only ever get 250...
 			radius: String(searchRadius),
 		})) as {
-			// TODO real types...
 			photos: {
 				pages: number
 				photo: Array<{
@@ -170,6 +161,10 @@ async function findTagsForLocation(location: LatLon): Promise<Map<string, number
 			currentPage++
 			// Console.log(`Scraping page ${currentPage}`);
 		}
+	}
+
+	if (tags.size === 0) {
+		throw new Error('No tags found near location')
 	}
 
 	// Sort the map (insertion order)
@@ -248,11 +243,16 @@ function generateHaikuFromTags(tags: Map<string, number>, quantity = 1): string 
  * photos.
  *
  * @param address - The address to generate a haiku for, reasonably forgiving.
+ * @param flickrApiKey - A Flickr API key, used to search for nearby photos.
  * @param quantity - The number of haikus to generate.
  */
-export async function generateHaikuForAddress(address: string, quantity = 1): Promise<string> {
+export async function generateHaikuForAddress(
+	address: string,
+	flickrApiKey: string,
+	quantity = 1,
+): Promise<string> {
 	const location = await geocode(address)
-	const tags = await findTagsForLocation(location)
+	const tags = await findTagsForLocation(location, flickrApiKey)
 	const haiku = generateHaikuFromTags(tags, quantity)
 
 	return haiku

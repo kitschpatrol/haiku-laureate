@@ -4,18 +4,10 @@
 
 <!-- /title -->
 
-<!-- badges ({
-  custom: {
-    "Netlify Status": {
-      image: "https://api.netlify.com/api/v1/badges/f35e1ada-effe-440d-b130-c54f070476e0/deploy-status",
-      link: "https://app.netlify.com/sites/haiku-laureate/deploys",
-    },
+<!-- badges -->
 
-  }
-}) -->
-
+[![License: CC-BY-NC-SA-4.0](https://img.shields.io/badge/License-CC--BY--NC--SA--4.0-yellow.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
 [![CI](https://github.com/kitschpatrol/haiku-laureate/actions/workflows/ci.yml/badge.svg)](https://github.com/kitschpatrol/haiku-laureate/actions/workflows/ci.yml)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f35e1ada-effe-440d-b130-c54f070476e0/deploy-status)](https://app.netlify.com/sites/haiku-laureate/deploys)
 
 <!-- /badges -->
 
@@ -29,30 +21,18 @@
 
 This is a service which generates geographically-aware haiku for any location. It was created in 2010.
 
-It's implemented in TypeScript + Node.js, and is exposed through a simple API service intended for deployment on Netlify. Note that it cannot be deployed to Cloudflare Workers because it depends on Node APIs.
-
-Note the rewrite to provide a cleaner API URL.
+It's implemented in TypeScript, and is exposed through a simple API service deployed to a Cloudflare Worker. The service was ported from its original Python implementation (saved in `/archive`) in March 2022.
 
 An interactive version is available on [frontiernerds.com](https://frontiernerds.com/haiku-laureate).
 
 ## Usage
-
-### As a module
-
-```ts
-import { generateHaikuForAddress } from './src/main'
-
-const haiku = await generateHaikuForAddress('123 William Street, New York NY')
-
-console.log(haiku)
-```
 
 ### Via web API
 
 Request
 
 ```sh
-curl -s "https://haiku-laureate.netlify.app/api/generate?address=123%20william%20street%20new%20york%20new%20york" | jq
+curl -s "https://frontiernerds.com/api/haiku-laureate?address=123%20william%20street%20new%20york%20new%20york" | jq
 ```
 
 Response:
@@ -65,16 +45,22 @@ Response:
 }
 ```
 
-## Development
+### As a module
 
-### Setup
+_This package is not published to NPM, so module resolution is up to the user._
 
-```sh
-pnpm install
+```ts
+import { generateHaikuForAddress } from 'haiku-laureate'
+
+const haiku = await generateHaikuForAddress('123 William Street, New York NY', 'flickr-api-key')
+
+console.log(haiku)
 ```
 
-### Test
+<!-- license -->
 
-```sh
-pnpm run test
-```
+## License
+
+[CC-BY-NC-SA-4.0](license.txt) © [Eric Mika](https://ericmika.com)
+
+<!-- /license -->

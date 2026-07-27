@@ -1,9 +1,8 @@
 {
 	"extends": "@kitschpatrol/typescript-config",
 	"compilerOptions": {
-		"types": ["node", "lodash", "node-geocoder"]
+		"types": ["node", "lodash"]
 	},
-
 	"include": ["**/**.*"],
 	"exclude": ["dist"]
 }

@@ -101,11 +101,11 @@ jobs:
         env:
           HOMEPAGE: ${{ steps.homepage.outputs.url }}
         run: |
-          pipx run --spec ultimate-sitemap-parser usp ls "$HOMEPAGE" -f pages \
-            > "$RUNNER_TEMP/urls.txt" 2> "$RUNNER_TEMP/usp.log" || true
+          pipx run --spec trafilatura trafilatura --sitemap "$HOMEPAGE" --list \
+            > "$RUNNER_TEMP/urls.txt" 2> "$RUNNER_TEMP/trafilatura.log" || true
           if ! grep -q '[^[:space:]]' "$RUNNER_TEMP/urls.txt"; then
             echo "::group::No sitemap found, falling back to homepage URL"
-            cat "$RUNNER_TEMP/usp.log"
+            cat "$RUNNER_TEMP/trafilatura.log"
             echo "::endgroup::"
             printf '%s\n' "$HOMEPAGE" > "$RUNNER_TEMP/urls.txt"
           fi

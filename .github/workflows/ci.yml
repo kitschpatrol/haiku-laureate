@@ -49,3 +49,5 @@ jobs:
 
       - name: Test
         run: pnpm run test
+        env:
+          FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}

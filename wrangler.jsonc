@@ -1,0 +1,11 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "haiku-laureate",
+	"main": "cloudflare/worker.ts",
+	"compatibility_date": "2026-07-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"routes": ["frontiernerds.com/api/haiku-laureate*"],
+	"observability": {
+		"enabled": true,
+	},
+}

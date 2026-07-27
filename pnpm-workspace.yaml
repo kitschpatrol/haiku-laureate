@@ -12,3 +12,4 @@ publicHoistPattern:
 allowBuilds:
   esbuild: true
   unrs-resolver: true
+  workerd: true
