@@ -203,19 +203,21 @@ function generateRow(
 			continue
 		}
 
-		if (tentativeSyllablesInRow <= syllablesWanted) {
-			if (isBoring(word)) {
-				usedBoring = 1 // We used our boring card for this line...
-			}
-
-			row += word + ' '
-
-			syllablesInRow = tentativeSyllablesInRow
-			usedWords.push(word)
-
-			// Optionally print syllable count for a sanity check.
-			// console.log(`${word} has ${syllablesInWord} syllables`);
+		if (tentativeSyllablesInRow > syllablesWanted) {
+			continue
 		}
+
+		if (isBoring(word)) {
+			usedBoring = 1 // We used our boring card for this line...
+		}
+
+		row += word + ' '
+
+		syllablesInRow = tentativeSyllablesInRow
+		usedWords.push(word)
+
+		// Optionally print syllable count for a sanity check.
+		// console.log(`${word} has ${syllablesInWord} syllables`);
 	}
 
 	return row.trim()
