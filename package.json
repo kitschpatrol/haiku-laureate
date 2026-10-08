@@ -51,7 +51,7 @@
 	},
 	"devDependencies": {
 		"@kitschpatrol/dict-en-wiktionary": "^1.5.0",
-		"@kitschpatrol/shared-config": "^8.12.1",
+		"@kitschpatrol/shared-config": "^8.13.1",
 		"@types/lodash": "^4.17.25",
 		"@types/node": "~24.13.3",
 		"bumpp": "^12.3.0",
