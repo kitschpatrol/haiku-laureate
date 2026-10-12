@@ -50,20 +50,20 @@
 		"syllable": "^5.0.1"
 	},
 	"devDependencies": {
-		"@kitschpatrol/dict-en-wiktionary": "^1.5.0",
+		"@kitschpatrol/dict-en-wiktionary": "^1.6.0",
 		"@kitschpatrol/shared-config": "^8.13.1",
-		"@types/lodash": "^4.17.25",
-		"@types/node": "~24.13.3",
+		"@types/lodash": "^4.17.26",
+		"@types/node": "~24.13.6",
 		"bumpp": "^12.3.0",
-		"dotenv": "^18.0.5",
+		"dotenv": "^18.0.7",
 		"shx": "^0.4.0",
-		"skills": "^1.7.0",
-		"tsdown": "^0.23.0",
+		"skills": "^1.7.2",
+		"tsdown": "^0.23.1",
 		"typescript": "~6.0.3",
 		"vitest": "^5.0.3",
-		"wrangler": "^4.147.0"
+		"wrangler": "^4.149.0"
 	},
-	"packageManager": "pnpm@12.9.1",
+	"packageManager": "pnpm@12.11.2",
 	"engines": {
 		"node": "^24.16.0 || >=26.3.0"
 	}
