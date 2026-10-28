@@ -143,12 +143,7 @@ async function findTagsForLocation(
 					!isPicture(word) &&
 					!isTerminallyBoring(word)
 				) {
-					// eslint-disable-next-line max-depth
-					if (tags.has(word)) {
-						tags.set(word, (tags.get(word) ?? 0) + 1)
-					} else {
-						tags.set(word, 1)
-					}
+					tags.set(word, (tags.get(word) ?? 0) + 1)
 				}
 			}
 		}

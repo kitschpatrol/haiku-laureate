@@ -34,13 +34,12 @@
 	"types": "./dist/index.d.ts",
 	"scripts": {
 		"build": "tsdown --tsconfig tsconfig.build.json --platform neutral --dts",
-		"clean-deep": "shx rm -f pnpm-lock.yaml && git clean -fdX -e !.claude/",
+		"clean-deep": "shx rm -f pnpm-lock.yaml && git clean -fdX",
 		"deploy": "wrangler deploy --secrets-file .env",
 		"dev": "wrangler dev --env-file .env --upstream-protocol https",
 		"fix": "ksc fix",
 		"init": "op inject -i .template.env -o .env && op inject -i archive/app/.template.credentials.cfg -o archive/app/credentials.cfg",
 		"lint": "ksc lint",
-		"prepare": "skills experimental_sync -y -f",
 		"release": "bumpp --commit 'Release: %s'",
 		"test": "vitest run"
 	},
@@ -51,19 +50,18 @@
 	},
 	"devDependencies": {
 		"@kitschpatrol/dict-en-wiktionary": "^1.6.0",
-		"@kitschpatrol/shared-config": "^8.13.1",
+		"@kitschpatrol/shared-config": "^8.14.0",
 		"@types/lodash": "^4.17.26",
 		"@types/node": "~24.13.6",
 		"bumpp": "^12.3.0",
 		"dotenv": "^18.0.8",
 		"shx": "^0.4.0",
-		"skills": "^1.7.2",
 		"tsdown": "^0.23.1",
 		"typescript": "~6.0.3",
 		"vitest": "^5.0.5",
 		"wrangler": "^4.151.1"
 	},
-	"packageManager": "pnpm@12.14.0",
+	"packageManager": "pnpm@12.15.0",
 	"engines": {
 		"node": "^24.16.0 || >=26.3.0"
 	}
