@@ -40,7 +40,7 @@
 		"fix": "ksc fix",
 		"init": "op inject -i .template.env -o .env && op inject -i archive/app/.template.credentials.cfg -o archive/app/credentials.cfg",
 		"lint": "ksc lint",
-		"release": "bumpp --commit 'Release: %s'",
+		"release": "bumpp --commit 'Release: %s' --all --execute 'chagent'",
 		"test": "vitest run"
 	},
 	"dependencies": {
@@ -49,6 +49,7 @@
 		"syllable": "^5.0.1"
 	},
 	"devDependencies": {
+		"@kitschpatrol/chagent": "0.4.0",
 		"@kitschpatrol/dict-en-wiktionary": "^1.6.0",
 		"@kitschpatrol/shared-config": "^8.14.0",
 		"@types/lodash": "^4.17.27",
